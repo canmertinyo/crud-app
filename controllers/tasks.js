@@ -31,10 +31,6 @@ const getTask = async (req, res) => {
   }
 };
 
-const updateTask = (req, res) => {
-  res.send('update task');
-};
-
 const deleteTask = async (req, res) => {
   try {
     const { id: taskID } = req.params;
@@ -51,6 +47,27 @@ const deleteTask = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ msg: error });
   }
+};
+
+const updateTask = async (req, res) => {
+  try {
+    const { id: taskID } = req.params;
+    const updateTask = await Task.findByIdAndUpdate({ _id: taskID }, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updateTask) {
+      return res.status(500).json({ msg: 'i cant update' });
+    }
+
+    return res.status(200).json({
+      info: {
+        item: updateTask,
+        message: 'item is updated!',
+      },
+    });
+  } catch (error) {}
 };
 
 module.exports = {

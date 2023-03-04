@@ -10,6 +10,7 @@ const cors = require('cors');
 
 async function bootstrap() {
   //middleware
+  app.use(express.static('./public'));
   app.use(express.json());
   app.use(helmet());
   app.use(compression());
@@ -18,9 +19,6 @@ async function bootstrap() {
   app.use(cors());
 
   //routes
-  app.get('/hello', (req, res) => {
-    res.send('task manager');
-  });
   app.use('/api/v1/tasks', tasks);
 
   const port = 3000;
