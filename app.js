@@ -2,10 +2,12 @@ const express = require('express');
 const tasks = require('./routes/tasks');
 const app = express();
 const connect = require('./database/connect');
+const helmet = require('helmet');
 
 async function bootstrap() {
   //middleware
   app.use(express.json());
+  app.use(helmet());
 
   //routes
   app.get('/hello', (req, res) => {
